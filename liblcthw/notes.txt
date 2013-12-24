@@ -1,0 +1,46 @@
+Problems I Encountered
+###########################
+
+*Compiling problem*
+This isn't a problem with the code (or maybe it is).
+
+Problem: The library won't link correctly. This occurs when "cc -g -O2 -Wall -Wextra -Isrc -rdynamic -DNDEBUG build/liblcthw.a tests/list_tests.c -ldl -o tests/list_tests" is invoked in the terminal ("-ldl isn't necessary and from the previous makefile). The exact error is "FILE: undefined reference to 'FUNCTION'". FILE is the source code for the library and FUNCTION is one of the functions within the source code "src/lcthw/list.c". The linker spews that out for each function call in list_tests.c which is referenced in the library (library is build/liblcthw.a  created from src/lcthw/list.c). ld (the linker) returned an 1 exit status.
+
+Possible Causes:
+1.) The linker options might not be in the correct order. Though this seems unlikely since there aren't many linker options needed for this compilation No external libraries like dl or m are used in the code. Also the recipe is implicit so that would mean the build recipe would be wrong if so.
+2.) The library wasn't built correctly. This is a very vague statement but I honestly can't think of any other reason since the makefile looks fine.
+
+Attempts to Fix the Problem:
+1.) Removing -ldl didn't affect anything (as for as I could tell).
+2.) Switching the order of the "list_tests.c" and "liblcthw.a" files. This reduced the number of "undefined reference" errors to just the functions "List_create" and "List_clear_destroy". I can't figure out why. The order of ld options (LDLIBS) and compiler options (CFLAGS) do matter (for whatever stupid reason). But the order originally used worked just fine when compiling the test executable for the c-skeleton project. So this has perplexed me.
+
+Additional Tools:
+I just realized there is a tool called nm which will basically list all the symbols (such as functions) in the library. Here is the symbols for liblcthw.a:
+$nm liblcthw.a
+
+list.o:
+0000000000000000 r .LC0
+0000000000000005 r .LC1
+0000000000000000 r .LC2
+0000000000000030 r .LC3
+0000000000000060 r .LC4
+0000000000000090 r .LC5
+00000000000000e0 r .LC6
+0000000000000060 T List_clear
+0000000000000010 T List_destroy
+0000000000000400 T List_pop
+0000000000000090 T List_push
+0000000000000230 T List_remove
+00000000000003e0 T List_shift
+0000000000000160 T List_unshift
+                 U _GLOBAL_OFFSET_TABLE_
+                 U __errno_location
+                 U __fprintf_chk
+                 U calloc
+                 U free
+0000000000000000 T list_create
+                 U stderr
+                 U strerror
+
+This is telling me that "List_create" and "List_clear_destroy" aren't recognized symbols in the archive. Furthermore, "list_create" is a symbol. So this is telling me that I am bad at checking my functions. I later looked in the source file and sure enough "List_create" was typoed and "List_clear_destroy" wasn't even initialized. I think the reason this came up with this certian error (instead of the normal way of telling me that those functions weren't defined) is that the functions with the correct names were declared in the header file. Thus the functions were recognized in the test source code. What I should understand about this error is that the functions were written correctly in the header file but not the source file. (This took a lot longer than it should have but I am glad I think I fully understand this type of error now.)
+It is also worth noting the other problem which seems to be the order of the library and source/object files. Even after fixing the typos, the test code wouldn't compile. However, after switching the order, where the library follows the other files, the test code compiled smoothly. (Again, I hate that this is a problem.)

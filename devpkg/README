@@ -1,0 +1,47 @@
+What is this about?
+A tool for grabbing and installing packages from a url. Devpkg can be used to fetch the source files and build them using the standard ./configure, make, make install process. Devpkg can also set up a database which stores the installed packages (the url is what distinguishes each package, so it won't check for the same program and the same program could be installed twice).
+
+
+Notes
+There must be a way to log all the packages installed (a database will be used)
+
+
+Installation
+first: make (compiles the source files)
+second: make install (sets up the files in /usr/local/bin so that "devpkg" can be invoked with that exact phrase)
+
+
+Usage
+In order to use devpkg, it must be invoked as "devpkg <options> <parameters>" where the options include -I, -L, -c, -m, -i, -d, -S, -F, -B. There respective parameters will be discussed below.
+
+I == install
+This option tells devpkg to install the given url. This first fetches the url and then builds it. It is equivalent to using "F" and then "B" (fetch and build options). Configure, make and make install options can be used with this command (these are optional and specific for each package installed).
+format: devpkg I <url> <other_option_arguments>
+
+L == list
+This option doesn't take any parameters and will simply list the installed packages.
+format: devpkg L
+
+c == configure options
+This option sets the ./configure options for the given package. This is used with "I" or "B".
+format: devpkg I <url> c <configure_option_arguments>
+
+m == make options
+This option sets the make options for the given package. This is used with "I" or "B".
+format: devpkg I <url> m <make_option_arguments>
+
+i == make install options
+This option sets the make install options for the given package. This is used with "I" or "B".
+format: devpkg I <url> i <make_install_option_arguments>
+
+S == create database
+This command creates the database which stores the urls.
+format: devpkg S
+
+F == fetch
+This grabs the program files from the given url. Git, tar.gz, tar.bz2 are supported file formats. This will also untar tape archives.
+format: devpkg F <url>
+
+B == build
+This will build the given url.
+format: devpkg B <url> <other_option_arguments>

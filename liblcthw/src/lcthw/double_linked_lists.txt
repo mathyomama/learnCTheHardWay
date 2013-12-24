@@ -1,0 +1,21 @@
+Linked Lists
+They work by having nodes point to the next or previous entry in a list. Each node in the simplest form has two fields: One datum or value and the other a reference point to the next node.
+
+Example: This has a pointer to the next node in the list
+
+value, addr      value, addr      value, addr                 terminal node
+ ____ ____        ____ ____        ____ ____                   ____
+|    |    |      |    |    |      |    |    |                 |\  /|
+| 4  | 0x |----->| 2  | 0x |----->| 10 | 0x |-----> ... ----->| \/ |
+|____|____|      |____|____|      |____|____|                 | /\ |
+                                                              |/  \|
+                                                              |____|
+
+Double linked Lists
+Theses are like linked lists except they have pointer to both the next and previous nodes within each node.
+
+Pros of a linked list
+Insertion and deleting is relatively fast since you have information about the placement of the data. Because each element is in its own node, insertion doesn't involve relocating the memory (i.e. pushing the elements after the insertion).
+
+Cons of a linked list
+Traversing the list is relatively slow because each pointer to the next node has to be processed (i.e. looked up or found). This includes sorting, searching, or iterating over the elements. Also jumping to a certain spot in the list involes going through the elements before it (or after it if going backwards).
