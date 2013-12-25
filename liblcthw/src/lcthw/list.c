@@ -125,4 +125,5 @@ void List_print(List *list)
 	LIST_FOREACH(list, first, next, cur) {
 		printf("%s\n", cur->value);
 	}
+	printf("\n");
 }

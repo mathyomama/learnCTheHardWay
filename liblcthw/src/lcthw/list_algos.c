@@ -17,8 +17,12 @@ int List_bubble_sort(List *list, List_compare cmp)
 	int metric;
 	do {
 		swaps = 0;
+		a = list->first;
+		b = a->next;
 		int i;
 		for (i = 0; i < count - 1; i++) {
+			//printf("A value: %s\n", a->value);
+			//printf("B value: %s\n", b->value);
 			metric = cmp(a->value, b->value);
 			if (metric > 0) {
 				tmp_value = a->value;
@@ -28,10 +32,11 @@ int List_bubble_sort(List *list, List_compare cmp)
 			}
 			a = a->next;
 			b = b->next;
+			//fflush(stdout);
 		}
 		count--;
-		List_print(list);
-		printf("%d\n", swaps);
+		//List_print(list);
+		//printf("%d\n", swaps);
 	} while (swaps);
 
 	return 0;
@@ -52,14 +57,16 @@ List *List_merge_sort(List *list, List_compare cmp)
 	for (i = 0; i < half_count; i++) {
 		node = node->next;
 	}
-	List *listA = NULL;
+	List *listA = List_create();
 	listA->first = list->first;
 	listA->last = node;
 	listA->count = half_count;
-	List *listB = NULL;
+	List *listB = List_create();
 	listB->first = node->next;
 	listB->last = list->last;
 	listB->count = list->count - half_count;
+	List_print(listA);
+	List_print(listB);
 	
 	// Do the recursion now (other algorithms have the recursion at the end)
 	listA = List_merge_sort(listA, cmp);
@@ -98,6 +105,9 @@ List *List_merge_sort(List *list, List_compare cmp)
 		node->next = nodeA;
 		list->last = listA->last;
 	}
+
+	free(listA);
+	free(listB);
 
 	return list;
 }
