@@ -3,16 +3,106 @@ DEBUG tests/list_algos_tests.c:81:
 ----- test_bubble_sort
 DEBUG tests/list_algos_tests.c:82: 
 ----- test_merge_sort
-Segmentation fault
+Segmentation fault (core dumped)
 DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
 DEBUG tests/list_algos_tests.c:81: 
 ----- test_bubble_sort
 DEBUG tests/list_algos_tests.c:82: 
 ----- test_merge_sort
-Segmentation fault
+Segmentation fault (core dumped)
 DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
 DEBUG tests/list_algos_tests.c:81: 
 ----- test_bubble_sort
 DEBUG tests/list_algos_tests.c:82: 
 ----- test_merge_sort
-Segmentation fault
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:87: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:81: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:82: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:88: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:82: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:83: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:88: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:82: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:83: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:90: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:84: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:85: 
+----- test_merge_sort
+Segmentation fault (core dumped)
+DEBUG tests/list_algos_tests.c:90: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:84: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:85: 
+----- test_merge_sort
+DEBUG tests/list_tests.c:107: ----- RUNNING: ./tests/list_tests
+DEBUG tests/list_tests.c:97: 
+----- test_create
+DEBUG tests/list_tests.c:98: 
+----- test_push_pop
+DEBUG tests/list_tests.c:99: 
+----- test_unshift
+DEBUG tests/list_tests.c:100: 
+----- test_remove
+DEBUG tests/list_tests.c:101: 
+----- test_shift
+DEBUG tests/list_tests.c:102: 
+----- test_destroy

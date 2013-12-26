@@ -45,18 +45,21 @@ int List_bubble_sort(List *list, List_compare cmp)
 
 List *List_merge_sort(List *list, List_compare cmp)
 {
+	fflush(stdout);
 	// obviously if the list has one node, then it is sorted
 	if (list->count <= 1) {
-		return 0;
+		return list;
 	}
 
 	// Divide the list first, this isn't efficient because of the very nature of the linked list
 	int half_count = list->count/2;
+	printf("half count: %d\n", half_count);
 	ListNode *node = list->first;
 	int i;
-	for (i = 0; i < half_count; i++) {
+	for (i = 0; i < half_count - 1; i++) {
 		node = node->next;
 	}
+	printf("middle node value: %s\n", node->value);
 	List *listA = List_create();
 	listA->first = list->first;
 	listA->last = node;
@@ -65,12 +68,17 @@ List *List_merge_sort(List *list, List_compare cmp)
 	listB->first = node->next;
 	listB->last = list->last;
 	listB->count = list->count - half_count;
+	listA->last->next = NULL;
 	List_print(listA);
 	List_print(listB);
 	
 	// Do the recursion now (other algorithms have the recursion at the end)
 	listA = List_merge_sort(listA, cmp);
+	printf("sorted listA:\n");
+	List_print(listA);
 	listB = List_merge_sort(listB, cmp);
+	printf("sorted listB:\n");
+	List_print(listB);
 
 	// At this point listA and listB are sorted and so they can be merged
 	ListNode *nodeA = listA->first;
@@ -93,7 +101,7 @@ List *List_merge_sort(List *list, List_compare cmp)
 			nodeA = nodeA->next;
 		} else {
 			node->next = nodeB;
-			nodeB->prev =node;
+			nodeB->prev = node;
 			node = nodeB;
 			nodeB = nodeB->next;
 		}
