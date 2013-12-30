@@ -68,12 +68,12 @@ char *test_merge_sort()
 	List *res2 = List_merge_sort(res, (List_compare)strcmp);
 	mu_assert(is_sorted(res2), "Should still be sorted after merge sort.");
 	printf("About to destroy the lists, res and res2.\n");
-	//List_destroy(res2);
-	//List_destroy(res);
+	List_destroy(res2);
+	List_destroy(res);
 
 	printf("About to destroy the list, words.\n");
 
-	//List_destroy(words);
+	List_destroy(words);
 	return NULL;
 }
 

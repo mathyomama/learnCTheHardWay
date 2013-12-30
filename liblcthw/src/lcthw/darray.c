@@ -18,7 +18,12 @@ DArray *DArray_create(size_t element_size, size_t initial_max)
 	return array;
 
 error:
-	if (array) free(array);
+	if (array) {
+		if (array->contents) {
+			free(array->contents);
+		}
+		free(array);
+	}
 	return NULL;
 }
 
@@ -64,7 +69,7 @@ error:
 
 int DArray_contract(DArray *array)
 {
-	int new_size = array->end < (int)array->expand_rate ? (int)array_expand_rate : array_end;
+	int new_size = array->end < (int)array->expand_rate ? (int)array->expand_rate : array->end;
 
 	return DArray_resize(array, new_size + 1);
 }

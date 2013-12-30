@@ -36,7 +36,7 @@ build:
 tests: $(TESTS)
 	sh ./tests/runtests.sh
 
-$(TESTS): $(TESTS).c $(TARGET)
+$(TESTS):  $(TARGET)
 	$(CC) $(CFLAGS) -o $@ $@.c $(TARGET)
 
 valgrind:

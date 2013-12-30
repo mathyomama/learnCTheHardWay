@@ -53,13 +53,18 @@ error:
 	return;
 }
 
+// Returns the last node
 void *List_pop(List *list)
 {
 	ListNode *node = list->last;
 	return node != NULL ? List_remove(list, node) : NULL;
 }
 
-void List_unshift(List*list, void *value)
+/*
+ * This puts a node at the front of the list
+ * And shifts the other nodes essentially
+ */
+void List_unshift(List *list, void *value)
 {
 	ListNode *node = calloc(1, sizeof(ListNode));
 	check_mem(node);
@@ -120,6 +125,7 @@ error:
 	return result;
 }
 
+/*
 void List_print(List *list)
 {
 	LIST_FOREACH(list, first, next, cur) {
@@ -127,3 +133,4 @@ void List_print(List *list)
 	}
 	printf("\n");
 }
+*/

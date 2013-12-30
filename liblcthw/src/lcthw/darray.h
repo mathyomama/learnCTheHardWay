@@ -4,7 +4,13 @@
 #include <assert.h>
 #include <lcthw/dbg.h>
 
-
+/*
+ * end is the last element in contents; end is the index after the last element (i.e. the length of the array).
+ * max is the maximum size of memory allocated in content. This will increase/decrease when expand/contract is called.
+ * element_size is the size of each block of data used to store each element
+ * expand_rate is how much elements the contents grows and shrinks by during expansion and contraction
+ * contents holds the data (double pointer since it's an array)
+ */
 typedef struct DArray {
 	int end;
 	int max;
@@ -15,7 +21,7 @@ typedef struct DArray {
 
 DArray *DArray_create(size_t element_size, size_t initial_max);
 
-void DArray_destory(DArray *array);
+void DArray_destroy(DArray *array);
 
 void DArray_clear(DArray *array);
 
@@ -44,6 +50,14 @@ static inline void DArray_set(DArray *array, int i, void *el)
 	array->contents[i] = el;
 error:
 	return;
+}
+
+static inline void *DArray_get(DArray *array, int i)
+{
+	check( i < array->max, "darray attempt to get past max.");
+	return array->contents[i];
+error:
+	return NULL;
 }
 
 static inline void *DArray_remove(DArray *array, int i)

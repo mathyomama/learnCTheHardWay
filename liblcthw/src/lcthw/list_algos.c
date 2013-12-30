@@ -47,19 +47,18 @@ List *List_merge_sort(List *list, List_compare cmp)
 {
 	fflush(stdout);
 	// obviously if the list has one node, then it is sorted
-	if (list->count <= 1) {
+	if (List_count(list) <= 1) {
 		return list;
 	}
 
 	// Divide the list first, this isn't efficient because of the very nature of the linked list
 	int half_count = list->count/2;
-	printf("half count: %d\n", half_count);
+	/*
 	ListNode *node = list->first;
 	int i;
 	for (i = 0; i < half_count - 1; i++) {
 		node = node->next;
 	}
-	printf("middle node value: %s\n", node->value);
 	List *listA = List_create();
 	listA->first = list->first;
 	listA->last = node;
@@ -69,18 +68,29 @@ List *List_merge_sort(List *list, List_compare cmp)
 	listB->last = list->last;
 	listB->count = list->count - half_count;
 	listA->last->next = NULL;
-	List_print(listA);
-	List_print(listB);
+	*/
+
+	List *listA = List_create();
+	List *listB = List_create();
+	int count = 0;
+	LIST_FOREACH(list, first, next, cur) {
+		if (count < half_count) {
+			List_push(listA, cur->value);
+		} else {
+			List_push(listB, cur->value);
+		}
+		count++;
+	}
 	
 	// Do the recursion now (other algorithms have the recursion at the end)
-	listA = List_merge_sort(listA, cmp);
-	printf("sorted listA:\n");
-	List_print(listA);
-	listB = List_merge_sort(listB, cmp);
-	printf("sorted listB:\n");
-	List_print(listB);
+	List *listA_sorted = List_merge_sort(listA, cmp);
+	List *listB_sorted = List_merge_sort(listB, cmp);
+
+	if (listA_sorted != listA) List_destroy(listA);
+	if (listB_sorted != listB) List_destroy(listB);
 
 	// At this point listA and listB are sorted and so they can be merged
+	/*
 	ListNode *nodeA = listA->first;
 	ListNode *nodeB = listB->first;
 	int metric = cmp(nodeA->value, nodeB->value);
@@ -112,10 +122,30 @@ List *List_merge_sort(List *list, List_compare cmp)
 	} else if (nodeB == NULL) {
 		node->next = nodeA;
 		list->last = listA->last;
+	}*/
+
+	List *result = List_create();
+	void *val = NULL;
+	while (List_count(listA_sorted) > 0 || List_count(listB_sorted) > 0) {
+		if (List_count(listA_sorted) > 0 && List_count(listB_sorted) > 0) {
+			if (cmp(List_first(listA_sorted), List_first(listB_sorted)) > 0) {
+				val = List_shift(listB_sorted);
+			} else {
+				val = List_shift(listA_sorted);
+			}
+			List_push(result, val);
+		} else if (List_count(listA_sorted) > 0) {
+			val = List_shift(listA_sorted);
+			List_push(result, val);
+		} else if (List_count(listB_sorted) > 0) {
+			val = List_shift(listB_sorted);
+			List_push(result, val);
+		}
 	}
 
-	free(listA);
-	free(listB);
+	List_destroy(listA_sorted);
+	List_destroy(listB_sorted);
 
-	return list;
+
+	return result;
 }
