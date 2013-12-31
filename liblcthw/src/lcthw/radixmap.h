@@ -10,6 +10,13 @@ typedef union RMElement {
 	} data;
 } RMElement;
 
+/*
+ * max = the size of memory allocated to contents
+ * end = the last index in contents
+ * counter = unsigned int of 4 bytes which keeps track of 
+ * contents = data
+ * temp = temporary data
+ */
 typedef struct RadixMap {
 	size_t max;
 	size_t end;

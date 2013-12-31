@@ -1,57 +1,133 @@
 #include <stdio.h>
+#include <stdlib>
+#include <assert.h>
+#include <lcthw/radixmap.h>
+#include <lcthw/dbg.h>
 
-typedef enum {
-	TYPE_INT,
-	TYPE_FLOAT,
-	TYPE_STRING,
-} VariantType;
-
-struct Variant {
-	VariantType type;
-	union {
-		int as_integer;
-		float as_float;
-		char *as_string;
-	} data;
-};
-
-typedef struct Variant Variant;
-
-void Variant_print(Variant *var)
+RadixMap *RadixMap_create(size_t max)
 {
-	switch (var->type) {
-		case TYPE_INT:
-			printf("INT: %d\n", var->data.as_integer);
-			break;
-		case TYPE_FLOAT:
-			printf("FLOAT: %f\n", var->data.as_float);
-			break;
-		case TYPE_STRING:
-			printf("STRING: %s\n", var->data.as_string);
-			break;
-		default:
-			printf("UNKNOWN TYPE: %d", var->type);
+	RadixMap *map = calloc(1, sizeof(RadixMap));
+	check_mem(map);
+
+	map->contents = calloc(max + 1, sizeof(RMElement));
+	check_mem(map->contents);
+
+	map->temp = calloc(max + 1, sizeof(RMElement));
+	check_mem(map->temp);
+
+	map->max = max;
+	map->end = 0;
+
+	return map;
+error:
+	return NULL;
+}
+
+void RadixMap_destroy(RadixMap *map)
+{
+	if (map) {
+		free(map->contents);
+		free(map->temp);
+		free(map);
 	}
 }
 
-int main(int argc, char *argv[])
+#define ByteOf(x, y) (((uint8_t *)x)[(y)])
+
+static inline void radix_sort(short offset, uint64_t max, uint64_t *source, uint64_t *dest)
 {
-	Variant a_int = {.type = TYPE_INT, .data.as_integer = 100};
-	Variant a_float = {.type = TYPE_FLOAT, .data.as_float = 100.34};
-	Variant a_string = {.type = TYPE_STRING, .data.as_string = "YO DUDE!"};
+	uint64_t count[256] = {0};
+	uint64_t *cp = NULL;
+	uint64_t *sp = NULL;
+	uint64_t *end = NULL;
+	uint64_t s = 0;
+	uint64_t c = 0;
 
-	Variant_print(&a_int);
-	Variant_print(&a_float);
-	Variant_print(&a_string);
+	// count occrurences of every byte value
+	for (sp = source, end = source + max; sp < end; sp++) {
+		count[ByteOf(sp, offset)]++;
+	}
 
-	// here's how you access them
-	a_int.data.as_integer = 200;
-	a_float.data.as_float = 2.345;
-	a_string.data.as_string = "Hi there.";
+	// transform count into index by summing elements and storing into same array
+	for (s = 0, cp = count, end = count + 256; cp < end; cp++) {
+		c = *cp;
+		*cp = s;
+		s += c;
+	}
 
-	Variant_print(&a_int);
-	Variant_print(&a_float);
-	Variant_print(&a_string);
+	// fill dest with the right values in the right place
+	for (sp = source, end = source + max; sp < end; sp++) {
+		cp = count + ByteOf(sp, offset);
+		dest[*cp] = *sp;
+		++(*cp);
+	}
+}
+
+void RadixMap_sort(RadixMap *map)
+{
+	uint64_t *source = &map->contents[0].raw;
+	uint64_t *temp = &map->temp[0].raw;
+
+	radix_sort(0, map->end, source, temp);
+	radix_sort(1, map->end, temp, source);
+	radix_sort(2, map->end, source, temp);
+	radix_sort(3, map->end, temp, source);
+}
+
+RMElement *RadixMap_find(RadixMap *map, uint32_t to_find)
+{
+	int low = 0;
+	int high = map->end - 1;
+	RMElement *data = map->contents;
+
+	while (low <= high) {
+		int middle = low + (high - low)/2;
+		uint32_t key = data[middle].data.key;
+
+		if (to_find < key) {
+			high = middle - 1;
+		} else if (to_find > key) {
+			low = middle + 1;
+		} else {
+			return &data[middle];
+		}
+	}
+
+	return NULL;
+}
+
+int RadixMap_add(RadixMap *map, uint32_t key, uint32_t value)
+{
+	check(key < UINT32_MAX, "Key can't be equal to UINT32_MAX.");
+	
+	RMElement element = {.data = {.key = key, .value = value}};
+	check(map->end + 1 < map->max, "RadixMap is full.");
+
+	map->contents[map->end++] = element;
+
+	RadixMap_sort(map);
 
 	return 0;
+
+error:
+	return -1;
+}
+
+int RadixMap_delete(RadixMap *map, RMElement *el)
+{
+	check(map->end > 0, "There is nothing to delete");
+	check(el != NULL, "Can't delete a NULL element.");
+
+	el->data.key = UINT32_MAX;
+
+	if (map->end > 1) {
+		// don't bother resorting a map of length 1.
+		RadixMap_sort(map);
+	}
+
+	map->end--;
+
+	return 0;
+error:
+	return -1;
 }
