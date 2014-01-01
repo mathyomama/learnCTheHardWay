@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib>
+#include <stdlib.h>
 #include <assert.h>
 #include <lcthw/radixmap.h>
 #include <lcthw/dbg.h>
