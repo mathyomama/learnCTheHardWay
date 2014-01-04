@@ -1,0 +1,70 @@
+DEBUG tests/darray_tests.c:122: ----- RUNNING: ./tests/darray_tests
+DEBUG tests/darray_tests.c:110: 
+----- test_create
+DEBUG tests/darray_tests.c:111: 
+----- test_new
+DEBUG tests/darray_tests.c:112: 
+----- test_set
+DEBUG tests/darray_tests.c:113: 
+----- test_get
+DEBUG tests/darray_tests.c:114: 
+----- test_remove
+DEBUG tests/darray_tests.c:115: 
+----- test_expand_contract
+DEBUG tests/darray_tests.c:116: 
+----- test_push_pop
+[ERROR] (tests/darray_tests.c:99: errno: None) Wrong value.
+DEBUG tests/darray_tests.c:123: ----- RUNNING: ./tests/darray_tests
+DEBUG tests/darray_tests.c:111: 
+----- test_create
+DEBUG tests/darray_tests.c:112: 
+----- test_new
+DEBUG tests/darray_tests.c:113: 
+----- test_set
+DEBUG tests/darray_tests.c:114: 
+----- test_get
+DEBUG tests/darray_tests.c:115: 
+----- test_remove
+DEBUG tests/darray_tests.c:116: 
+----- test_expand_contract
+DEBUG tests/darray_tests.c:117: 
+----- test_push_pop
+[ERROR] (tests/darray_tests.c:100: errno: None) Wrong value.
+DEBUG tests/darray_tests.c:123: ----- RUNNING: ./tests/darray_tests
+DEBUG tests/darray_tests.c:111: 
+----- test_create
+DEBUG tests/darray_tests.c:112: 
+----- test_new
+DEBUG tests/darray_tests.c:113: 
+----- test_set
+DEBUG tests/darray_tests.c:114: 
+----- test_get
+DEBUG tests/darray_tests.c:115: 
+----- test_remove
+DEBUG tests/darray_tests.c:116: 
+----- test_expand_contract
+DEBUG tests/darray_tests.c:117: 
+----- test_push_pop
+DEBUG tests/darray_tests.c:118: 
+----- test_destroy
+DEBUG tests/list_algos_tests.c:90: ----- RUNNING: ./tests/list_algos_tests
+DEBUG tests/list_algos_tests.c:84: 
+----- test_bubble_sort
+DEBUG tests/list_algos_tests.c:85: 
+----- test_merge_sort
+DEBUG tests/list_tests.c:107: ----- RUNNING: ./tests/list_tests
+DEBUG tests/list_tests.c:97: 
+----- test_create
+DEBUG tests/list_tests.c:98: 
+----- test_push_pop
+DEBUG tests/list_tests.c:99: 
+----- test_unshift
+DEBUG tests/list_tests.c:100: 
+----- test_remove
+DEBUG tests/list_tests.c:101: 
+----- test_shift
+DEBUG tests/list_tests.c:102: 
+----- test_destroy
+DEBUG tests/radix_tests.c:99: ----- RUNNING: ./tests/radix_tests
+DEBUG tests/radix_tests.c:94: 
+----- test_operations

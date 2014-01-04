@@ -1,0 +1,15 @@
+Two types of sorts: Least Significant Digit (LSD) and Most Significant Digit (MSD)
+
+=====
+*LSD*
+
+Least significant digit is used for numbers. So the list {2, 10, 1, 5} will be sorted to {1, 2, 5, 10}. The order is short keys come before long keys and keys of the same length are sorted lexicographically.
+
+example:
+List = 170, 45, 75, 90, 802, 2, 24, 66
+sort by least significant digit
+
+=====
+*MSD*
+
+Most significant digit is used for lexicographical order. So the list {2, 10, 1, 5} would be sorted to {1, 10, 2, 5}.
